@@ -4,10 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class Owner(db.model):
+class Owner(db.Model):
     """a pet owner and client"""
 
-    __tablename____ = 'owners'
+    __tablename__ = 'owners'
 
     owner_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     fname = db.Column(db.String(20), nullable=False)
@@ -16,46 +16,30 @@ class Owner(db.model):
     phone = db.Column(db.String(12), nullable=False)
     vet_name = db.Column(db.String(20), nullable=False)
     vet_phone = db.Column(db.String(12), nullable=False)
+    password = vet_name = db.Column(db.String(20), nullable=False)
     
-    __repr__(self):
+    def __repr__(self):
         return f'<Owner ownder_id: {self.owner_id} - name: {self.lname}, {self.fname}>'
 
 
 
-
-class Pet(db.model):
+class Pet(db.Model):
     """a pet"""
 
     __tablename__ = 'pets'
 
     pet_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    owner_id = db.Column(db.String(20), db.ForeignKey('owners.owner_id'), nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('owners.owner_id'), nullable=False)
     name = db.Column(db.String(20), nullable=False)
     species = db.Column(db.String(20), nullable=False)
     breed = db.Column(db.String(20), nullable=False)
     last_apt = db.Column(db.DateTime(timezone=False))
 
-    __repr__(self):
+    def __repr__(self):
         return f'<Pet name: {self.name} owner id: {self.ownder_id}>'
     
 
-class Appointment(db.model):
-    """an appointment"""
-
-    __tablename__ = 'appointments'
-
-    appt_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    owner_id = db.Column(db.String(20), db.ForeignKey('owners.owner_id'), nullable=False)
-    pet_id = db.Column(db.String(20), db.ForeignKey('pets.pet_id'), nullable=False)
-    date = db.Column(db.DateTime(timezone=False))
-    time = db.Column(db.DateTime(timezone=False))
-    groom_type = db.Column(db.String(20), nullable=False)
-    groomer = db.Column(db.String(20), db.ForeignKey('employees.emp_id'), nullable=False)
-
-    __repr__(self):
-        return f'<Appt date: {self.date} time: {self.time} pet: {self.pet_id}>'
-
-class Employee(db.model):
+class Employee(db.Model):
     """Employees"""
 
     __tablename__ = 'employees'
@@ -63,9 +47,29 @@ class Employee(db.model):
     emp_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     fname = db.Column(db.String(20), nullable=False)
     lname = db.Column(db.String(20), nullable=False)
+    password = vet_name = db.Column(db.String(20), nullable=False)
 
-    __repr__(self):
+    def __repr__(self):
         return f'<Pet name: {self.name} owner id: {self.ownder_id}>'
+
+
+
+class Appointment(db.Model):
+    """an appointment"""
+
+    __tablename__ = 'appointments'
+
+    apt_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    owner_id = db.Column(db.Integer, db.ForeignKey('owners.owner_id'), nullable=False)
+    pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'), nullable=False)
+    date = db.Column(db.DateTime(timezone=False))
+    time = db.Column(db.DateTime(timezone=False))
+    groom_type = db.Column(db.String(20), nullable=False)
+    groomer = db.Column(db.Integer, db.ForeignKey('employees.emp_id'), nullable=False)
+
+    def __repr__(self):
+        return f'<Appt date: {self.date} time: {self.time} pet: {self.pet_id}>'
+
 
 
 
