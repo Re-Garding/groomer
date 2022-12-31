@@ -47,3 +47,8 @@ def cancel_apt(apt_id):
     Appointment.query.filter(Appointment.apt_id==apt_id).delete()
     db.session.commit()
     return "Cancelled"
+
+def schedule_apt(owner_id, pet_id, date, time, groom_type, groomer):
+    apt = Appointment(owner_id=owner_id, pet_id=pet_id, date=date, time=time, groom_type=groom_type, groomer=groomer)
+
+    return apt
