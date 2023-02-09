@@ -16,7 +16,7 @@ class Owner(db.Model):
     phone = db.Column(db.String(12), nullable=False)
     vet_name = db.Column(db.String(20), nullable=False)
     vet_phone = db.Column(db.String(12), nullable=False)
-    password = vet_name = db.Column(db.String(20), nullable=False)
+    password = db.Column(db.String(20), nullable=False)
     
     def __repr__(self):
         return f'<Owner ownder_id: {self.owner_id} - name: {self.lname}, {self.fname}>'
@@ -47,7 +47,7 @@ class Employee(db.Model):
     emp_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     fname = db.Column(db.String(20), nullable=False)
     lname = db.Column(db.String(20), nullable=False)
-    password = vet_name = db.Column(db.String(20), nullable=False)
+    password = db.Column(db.String(20), nullable=False)
 
     def __repr__(self):
         return f'<Pet name: {self.name} owner id: {self.ownder_id}>'

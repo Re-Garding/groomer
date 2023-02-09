@@ -4,7 +4,7 @@ from model import db, Owner, Pet, Appointment, Employee
 
 
 def create_owner(fname, lname, email, phone, vet_name, vet_phone, password):
-"""add owner"""
+    """add owner"""
     owner = Owner(fname=fname, lname=lanme, email=email, phone=phone, vet_name=vet_name, vet_phone=vet_phone, password=password)
     db.session.add(new_owner)
     db.session.commit()
